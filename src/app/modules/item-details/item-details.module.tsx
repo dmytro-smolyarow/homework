@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { itemQueryOptions } from "@/app/entities/api/items";
 import type { IItemDetail } from "@/app/entities/models";
 import { FavoriteButton } from "@/app/features/favorite-button";
+import { CoverImage } from "@/app/shared/ui";
 
 // interface
 interface IProps {
@@ -29,12 +30,7 @@ const ItemDetailsModule: FC<Readonly<IProps>> = (props) => {
         ← Back to catalog
       </Link>
       <div className="detail" style={{ marginTop: 16 }}>
-        {item.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img className="cover" src={item.imageUrl} alt={item.title} />
-        ) : (
-          <div className="cover" style={{ aspectRatio: "2/3" }} />
-        )}
+        <CoverImage src={item.imageUrl} alt={item.title} />
         <div>
           <h1 style={{ marginTop: 0 }}>{item.title}</h1>
           <p>

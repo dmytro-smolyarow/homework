@@ -2,6 +2,7 @@ import { type FC, type ReactNode } from "react";
 import type { Metadata } from "next";
 
 import "@/config/styles/global.css";
+import { fontSans } from "@/config/fonts";
 import { QueryProvider } from "@/app/shared/ui";
 import { Navbar } from "@/app/widgets/navbar";
 
@@ -22,7 +23,7 @@ const RootLayout: FC<Readonly<IProps>> = (props) => {
 
   // return
   return (
-    <html lang="en">
+    <html lang="en" className={fontSans.variable}>
       <body>
         <QueryProvider>
           <Navbar />

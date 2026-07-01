@@ -8,6 +8,7 @@ import {
   favoritesQueryOptions,
   useRemoveFavoriteMutation,
 } from "@/app/entities/api/favorites";
+import { CoverImage } from "@/app/shared/ui";
 
 // component
 const FavoritesModule: FC = () => {
@@ -15,7 +16,14 @@ const FavoritesModule: FC = () => {
   const removeMutation = useRemoveFavoriteMutation();
 
   if (isLoading) {
-    return <p className="muted">Loading…</p>;
+    // return
+    return (
+      <div className="grid">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="skeleton cover" />
+        ))}
+      </div>
+    );
   }
 
   if (favorites.length === 0) {
@@ -32,16 +40,7 @@ const FavoritesModule: FC = () => {
       {favorites.map((fav) => (
         <div key={fav.favoriteId} className="card">
           <Link href={`/items/${fav.item.id}`}>
-            {fav.item.imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                className="cover"
-                src={fav.item.imageUrl}
-                alt={fav.item.title}
-              />
-            ) : (
-              <div className="cover" />
-            )}
+            <CoverImage src={fav.item.imageUrl} alt={fav.item.title} />
           </Link>
           <div className="body">
             <Link href={`/items/${fav.item.id}`} className="title">

@@ -2,6 +2,7 @@ import { type FC } from "react";
 import Link from "next/link";
 
 import type { IItem } from "@/app/entities/models";
+import { CoverImage } from "@/app/shared/ui";
 
 // interface
 interface IProps {
@@ -15,12 +16,7 @@ const ItemCard: FC<Readonly<IProps>> = (props) => {
   // return
   return (
     <Link href={`/items/${item.id}`} className="card">
-      {item.imageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img className="cover" src={item.imageUrl} alt={item.title} />
-      ) : (
-        <div className="cover" />
-      )}
+      <CoverImage src={item.imageUrl} alt={item.title} />
       <div className="body">
         <div className="title">{item.title}</div>
         {item.description && <div className="desc">{item.description}</div>}
