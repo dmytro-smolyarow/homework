@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { getFavoriteCount, getItemById } from "@/pkg/db";
 import { ItemDetailsModule } from "@/app/modules/item-details";
 
-// force dynamic — always read fresh from supabase
-export const dynamic = "force-dynamic";
+// isr — favoriteCount is a cross-user aggregate, 60s staleness is acceptable
+export const revalidate = 60;
 
 // interface
 interface IProps {

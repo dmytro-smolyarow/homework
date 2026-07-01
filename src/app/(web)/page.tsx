@@ -3,8 +3,9 @@ import { type NextPage } from "next";
 import { listItems } from "@/pkg/db";
 import { CatalogModule } from "@/app/modules/catalog";
 
-// force dynamic — always read fresh from supabase
-export const dynamic = "force-dynamic";
+// isr — cache the rendered list, revalidate every 5 min
+// public data, no per-user state; the client refetches via tanstack for freshness
+export const revalidate = 300;
 
 // page
 const Page: NextPage = async () => {
