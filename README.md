@@ -1,0 +1,129 @@
+# BookShelf — mini full-stack catalog
+
+A tiny full-stack catalog app built for the homework assignment. Theme: **programming books**.
+
+Browse a public list of books, open a details page for any book, sign up / log in,
+and save books to your personal **favorites** (auth-only, stored per user).
+
+## Stack
+
+| Layer            | Technology                                   |
+| ---------------- | -------------------------------------------- |
+| Framework        | Next.js 16 (App Router, Server Components)   |
+| Client data/cache| TanStack Query (`@tanstack/react-query`)     |
+| Forms            | react-hook-form                              |
+| Auth             | Better Auth (email + password)               |
+| Database         | Supabase (Postgres)                          |
+| ORM              | Drizzle ORM + Drizzle Kit                    |
+| Language         | TypeScript                                   |
+
+All queries to `items` and `favorites` go **through Drizzle only** — no raw SQL
+and no `supabase-js` client for these tables. Supabase is used purely as the
+Postgres host.
+
+## Routes
+
+| Route                 | Purpose                          | Access        |
+| --------------------- | -------------------------------- | ------------- |
+| `/`                   | Book list                        | public        |
+| `/items/[id]`         | Book details                     | public        |
+| `/favorites`          | Current user's favorites         | authenticated |
+| `/login`              | Login form                       | public        |
+| `/register`           | Registration form                | public        |
+| `/api/auth/[...all]`  | Better Auth route handler        | —             |
+| `/api/items`          | List items (search + pagination) | public        |
+| `/api/items/[id]`     | Single item (+ favorite count)   | public        |
+| `/api/favorites`      | GET / POST / DELETE favorites    | authenticated |
+| `/api/favorites/ids`  | Favorited item ids (toggle state)| authenticated |
+
+`/favorites` is protected two ways: a lightweight cookie check in
+[`src/proxy.ts`](src/proxy.ts) (Next.js 16 renamed `middleware.ts` → `proxy.ts`)
+that redirects to `/login`, **and** a server-side session check inside the page
+itself.
+
+## Data model (Drizzle)
+
+Besides the Better Auth tables (`user`, `session`, `account`, `verification`):
+
+- **`items`** — `id` (uuid PK), `title` (not null), `description`, `image_url` (nullable), `created_at`
+- **`favorites`** — `id` (uuid PK), `user_id` (FK → `user.id`), `item_id` (FK → `items.id`), `created_at`,
+  with a **unique index on `(user_id, item_id)`** so an item can't be favorited twice.
+
+Schema lives in [`src/db/schema.ts`](src/db/schema.ts) and
+[`src/db/auth-schema.ts`](src/db/auth-schema.ts).
+
+## Environment variables
+
+Copy `.env.example` → `.env.local` and fill in the values:
+
+| Variable              | What it is                                                             |
+| --------------------- | --------------------------------------------------------------------- |
+| `DATABASE_URL`        | Supabase **transaction pooler** string (port `6543`, `pgbouncer=true`) — runtime |
+| `DIRECT_URL`          | Supabase **session pooler / direct** string (port `5432`) — migrations |
+| `BETTER_AUTH_SECRET`  | Random secret, **≥ 32 chars** (see command below)                     |
+| `BETTER_AUTH_URL`     | App base URL, e.g. `http://localhost:3000`                            |
+
+Get both connection strings from Supabase → **Connect** → ORMs / Connection string.
+Generate a secret:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+> `.env.local` is git-ignored — secrets are never committed. Only `.env.example`
+> (without values) is in the repo.
+
+## Getting started
+
+```bash
+# 1. install deps
+npm install
+
+# 2. create your env file and fill it in
+cp .env.example .env.local
+
+# 3. apply the database schema to Supabase
+npm run db:generate   # generate SQL migration from the Drizzle schema
+npm run db:migrate    # apply migrations (non-interactive)
+# (alternatively: npm run db:push to push the schema directly)
+
+# 4. seed the items table (12 books)
+npm run db:seed
+
+# 5. run the dev server
+npm run dev
+```
+
+Open http://localhost:3000.
+
+## Scripts
+
+| Script              | Description                                  |
+| ------------------- | -------------------------------------------- |
+| `npm run dev`       | Start Next.js dev server                     |
+| `npm run build`     | Production build                             |
+| `npm run start`     | Start production server                      |
+| `npm run db:generate` | Generate Drizzle migration SQL             |
+| `npm run db:migrate`  | Apply migrations                           |
+| `npm run db:push`     | Push schema directly (interactive)         |
+| `npm run db:studio`   | Open Drizzle Studio                        |
+| `npm run db:seed`     | Seed the `items` table                     |
+
+## How the requirements are met
+
+- **Server Components** render the initial book list (`/`) and details
+  (`/items/[id]`) via Drizzle; the data hydrates into TanStack Query on the client.
+- **TanStack Query** `useQuery` reads lists/details/favorites; `useMutation`
+  adds/removes favorites with **cache invalidation** and **optimistic updates
+  with rollback** (see [`FavoriteButton`](src/components/FavoriteButton.tsx)).
+- **react-hook-form** powers `/login` and `/register` with validation (email
+  format, min password length, confirm-password) and surfaces Better Auth errors.
+- **Better Auth** uses `drizzleAdapter(db, { provider: "pg", schema })`, email +
+  password, and the `toNextJsHandler(auth)` route handler.
+
+## Bonus features implemented
+
+- 🔍 Search / filter by title (react-hook-form form + query params)
+- 📄 Pagination via TanStack Query
+- ⚡ Optimistic favorite toggle with rollback on error
+- 🔢 "Favorited N times" counter on the details page
