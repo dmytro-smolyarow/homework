@@ -1,4 +1,4 @@
-import { desc, eq, ilike, sql } from "drizzle-orm";
+import { count, desc, eq, ilike } from "drizzle-orm";
 import { db } from "./client";
 import { favorites, items } from "./schema";
 
@@ -27,10 +27,10 @@ export async function listItems({
       .orderBy(desc(items.createdAt))
       .limit(pageSize)
       .offset(offset),
-    db.select({ count: sql<number>`count(*)::int` }).from(items).where(where),
+    db.select({ value: count() }).from(items).where(where),
   ]);
 
-  const total = totalRow[0]?.count ?? 0;
+  const total = totalRow[0]?.value ?? 0;
 
   return {
     items: rows,
@@ -49,8 +49,8 @@ export async function getItemById(id: string) {
 // Bonus: how many times an item was favorited (across all users).
 export async function getFavoriteCount(itemId: string) {
   const rows = await db
-    .select({ count: sql<number>`count(*)::int` })
+    .select({ value: count() })
     .from(favorites)
     .where(eq(favorites.itemId, itemId));
-  return rows[0]?.count ?? 0;
+  return rows[0]?.value ?? 0;
 }

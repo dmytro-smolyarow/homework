@@ -57,12 +57,12 @@ src/
 │   ├── entities/      # api/ (fetch + React Query hooks) + models/ (domain types)
 │   └── shared/        # ui/ (query-provider) and other reusable code
 ├── config/            # env (client/server), styles/global.css
-├── pkg/               # external integrations: db (Drizzle + repositories), auth (Better Auth)
+├── pkg/               # external integrations: db (Drizzle client + services), auth (Better Auth)
 └── proxy.ts           # route protection (Next.js 16 middleware)
 ```
 
 Naming: `*.module.tsx`, `*.component.tsx`, `*.api.ts`, `*.query.ts`, `*.mutation.ts`,
-`*.model.ts`, `*.repository.ts`; kebab-case directories; each slice exposes an `index.ts` barrel.
+`*.model.ts`, `*.service.ts`; kebab-case directories; each slice exposes an `index.ts` barrel.
 Pages stay thin — server-side Drizzle fetch happens in the page, all rendering/logic lives in modules.
 
 > Note: server-side data access (Drizzle client + query repositories) lives in `pkg/db`

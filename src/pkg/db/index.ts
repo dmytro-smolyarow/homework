@@ -6,11 +6,11 @@ export {
   getItemById,
   getFavoriteCount,
   type ListItemsParams,
-} from "./items.repository";
+} from "./items.service";
 export {
   listFavorites,
   listFavoriteItemIds,
   addFavorite,
   removeFavorite,
-} from "./favorites.repository";
+} from "./favorites.service";
 export * from "./schema";
