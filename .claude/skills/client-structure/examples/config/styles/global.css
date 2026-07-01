@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+/* global tokens and CSS variables */
+:root {
+  --font-primary: '';
+  --color-cta: oklch(0.72 0.18 250);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-primary), system-ui, sans-serif;
+  }
+}

@@ -12,9 +12,10 @@
     "db:push": "drizzle-kit push",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "tsx src/scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
+    "@t3-oss/env-nextjs": "^0.13.11",
     "@tanstack/react-query": "^5.101.2",
     "better-auth": "^1.6.23",
     "drizzle-orm": "^0.45.2",

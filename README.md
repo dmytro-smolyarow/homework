@@ -41,6 +41,34 @@ Postgres host.
 that redirects to `/login`, **and** a server-side session check inside the page
 itself.
 
+## Architecture
+
+The code follows the team's layered client architecture (see `.claude/client.md`):
+**layers → slices → segments**, where a layer may only import from layers below it.
+
+```
+src/
+├── app/
+│   ├── (web)/         # routing: thin pages + root layout
+│   ├── (api)/api/     # route handlers (Better Auth, items, favorites)
+│   ├── modules/       # business logic per page: catalog, item-details, favorites, login, register
+│   ├── widgets/       # self-sufficient UI: navbar, item-card
+│   ├── features/      # small reusable pieces: favorite-button
+│   ├── entities/      # api/ (fetch + React Query hooks) + models/ (domain types)
+│   └── shared/        # ui/ (query-provider) and other reusable code
+├── config/            # env (client/server), styles/global.css
+├── pkg/               # external integrations: db (Drizzle client + services), auth (Better Auth)
+└── proxy.ts           # route protection (Next.js 16 middleware)
+```
+
+Naming: `*.module.tsx`, `*.component.tsx`, `*.api.ts`, `*.query.ts`, `*.mutation.ts`,
+`*.model.ts`, `*.service.ts`; kebab-case directories; each slice exposes an `index.ts` barrel.
+Pages stay thin — server-side Drizzle fetch happens in the page, all rendering/logic lives in modules.
+
+> Note: server-side data access (Drizzle client + query repositories) lives in `pkg/db`
+> since the client guide is UI-oriented and doesn't define a server data-access slot;
+> `pkg` is the lowest layer, importable by both route handlers and server pages.
+
 ## Data model (Drizzle)
 
 Besides the Better Auth tables (`user`, `session`, `account`, `verification`):
@@ -49,8 +77,8 @@ Besides the Better Auth tables (`user`, `session`, `account`, `verification`):
 - **`favorites`** — `id` (uuid PK), `user_id` (FK → `user.id`), `item_id` (FK → `items.id`), `created_at`,
   with a **unique index on `(user_id, item_id)`** so an item can't be favorited twice.
 
-Schema lives in [`src/db/schema.ts`](src/db/schema.ts) and
-[`src/db/auth-schema.ts`](src/db/auth-schema.ts).
+Schema lives in [`src/pkg/db/schema.ts`](src/pkg/db/schema.ts) and
+[`src/pkg/db/auth-schema.ts`](src/pkg/db/auth-schema.ts).
 
 ## Environment variables
 
@@ -61,7 +89,8 @@ Copy `.env.example` → `.env.local` and fill in the values:
 | `DATABASE_URL`        | Supabase **transaction pooler** string (port `6543`, `pgbouncer=true`) — runtime |
 | `DIRECT_URL`          | Supabase **session pooler / direct** string (port `5432`) — migrations |
 | `BETTER_AUTH_SECRET`  | Random secret, **≥ 32 chars** (see command below)                     |
-| `BETTER_AUTH_URL`     | App base URL, e.g. `http://localhost:3000`                            |
+| `BETTER_AUTH_URL`     | App base URL (server side), e.g. `http://localhost:3000`              |
+| `NEXT_PUBLIC_BETTER_AUTH_URL` | App base URL exposed to the browser (Better Auth client)      |
 
 Get both connection strings from Supabase → **Connect** → ORMs / Connection string.
 Generate a secret:
@@ -115,7 +144,8 @@ Open http://localhost:3000.
   (`/items/[id]`) via Drizzle; the data hydrates into TanStack Query on the client.
 - **TanStack Query** `useQuery` reads lists/details/favorites; `useMutation`
   adds/removes favorites with **cache invalidation** and **optimistic updates
-  with rollback** (see [`FavoriteButton`](src/components/FavoriteButton.tsx)).
+  with rollback** (see [`favorites.mutation.ts`](src/app/entities/api/favorites/favorites.mutation.ts)
+  and [`favorite-button.component.tsx`](src/app/features/favorite-button/favorite-button.component.tsx)).
 - **react-hook-form** powers `/login` and `/register` with validation (email
   format, min password length, confirm-password) and surfaces Better Auth errors.
 - **Better Auth** uses `drizzleAdapter(db, { provider: "pg", schema })`, email +

@@ -1,0 +1,39 @@
+{
+  "enabledPlugins": {
+    "cloudflare@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "supabase@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(npm *)",
+      "Bash(yarn *)",
+      "Bash(pnpm *)",
+      "Bash(node *)",
+      "Bash(ls*)",
+      "Bash(cat*)",
+      "Bash(mkdir*)",
+      "Bash(cd*)",
+      "Bash(pwd)",
+      "Bash(echo*)",
+      "Bash(grep*)",
+      "Bash(find*)",
+      "Bash(curl*)",
+      "Read",
+      "Edit",
+      "Write"
+    ],
+    "ask": [
+      "Bash(rm*)",
+      "Bash(sudo*)",
+      "Bash(git push*)"
+    ]
+  }
+}
