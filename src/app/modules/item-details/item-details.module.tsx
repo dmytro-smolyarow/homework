@@ -1,17 +1,28 @@
 "use client";
 
+import { type FC } from "react";
 import Link from "next/link";
-import { useItemQuery } from "@/app/entities/api/items";
-import type { ItemDetail } from "@/app/entities/models";
+import { useQuery } from "@tanstack/react-query";
+
+import { itemQueryOptions } from "@/app/entities/api/items";
+import type { IItemDetail } from "@/app/entities/models";
 import { FavoriteButton } from "@/app/features/favorite-button";
 
-export function ItemDetailsModule({
-  initialData,
-}: {
-  initialData: ItemDetail;
-}) {
-  const { data: item } = useItemQuery(initialData.id, initialData);
+// interface
+interface IProps {
+  initialData: IItemDetail;
+}
 
+// component
+const ItemDetailsModule: FC<Readonly<IProps>> = (props) => {
+  const { initialData } = props;
+
+  const { data: item } = useQuery({
+    ...itemQueryOptions(initialData.id),
+    initialData,
+  });
+
+  // return
   return (
     <div>
       <Link href="/" className="muted">
@@ -40,4 +51,6 @@ export function ItemDetailsModule({
       </div>
     </div>
   );
-}
+};
+
+export default ItemDetailsModule;

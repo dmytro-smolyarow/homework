@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
+
 import { auth } from "./auth";
 
-// Server-side session lookup (verifies against the DB). Use in server
-// components and route handlers.
+// get session — server-side, verifies against the db
 export async function getSession() {
   return auth.api.getSession({ headers: await headers() });
 }

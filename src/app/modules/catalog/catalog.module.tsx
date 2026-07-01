@@ -1,41 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { type FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useItemsQuery } from "@/app/entities/api/items";
-import type { ItemsResponse } from "@/app/entities/models";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
+import { itemsQueryOptions } from "@/app/entities/api/items";
+import type { IItemsResponse } from "@/app/entities/models";
 import { ItemCard } from "@/app/widgets/item-card";
 
-type SearchForm = { search: string };
+interface ISearchForm {
+  search: string;
+}
 
-export function CatalogModule({
-  initialData,
-}: {
-  initialData: ItemsResponse;
-}) {
+// interface
+interface IProps {
+  initialData: IItemsResponse;
+}
+
+// component
+const CatalogModule: FC<Readonly<IProps>> = (props) => {
+  const { initialData } = props;
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const { register, handleSubmit, reset } = useForm<SearchForm>({
+  const { register, handleSubmit, reset } = useForm<ISearchForm>({
     defaultValues: { search: "" },
   });
 
-  const { data, isFetching } = useItemsQuery(search, page, initialData);
+  // initialData only seeds the first, unsearched page
+  const { data, isFetching } = useQuery({
+    ...itemsQueryOptions(search, page),
+    placeholderData: keepPreviousData,
+    initialData: search === "" && page === 1 ? initialData : undefined,
+  });
 
-  function onSubmit(values: SearchForm) {
+  const onSubmit = (values: ISearchForm) => {
     setSearch(values.search.trim());
     setPage(1);
-  }
+  };
 
-  function clearSearch() {
+  const clearSearch = () => {
     reset({ search: "" });
     setSearch("");
     setPage(1);
-  }
+  };
 
   const items = data?.items ?? [];
   const totalPages = data?.totalPages ?? 1;
 
+  // return
   return (
     <div>
       <form
@@ -97,4 +111,6 @@ export function CatalogModule({
       )}
     </div>
   );
-}
+};
+
+export default CatalogModule;

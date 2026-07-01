@@ -1,15 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { type FC, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
+
 import { signIn } from "@/pkg/auth/auth-client";
 
-type LoginForm = { email: string; password: string };
+interface ILoginForm {
+  email: string;
+  password: string;
+}
 
-export function LoginModule() {
+// component
+const LoginModule: FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
@@ -20,9 +25,10 @@ export function LoginModule() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginForm>();
+  } = useForm<ILoginForm>();
 
-  async function onSubmit(values: LoginForm) {
+  // sign in — surface Better Auth errors, then refresh session-aware UI
+  const onSubmit = async (values: ILoginForm) => {
     setServerError(null);
     const { error } = await signIn.email({
       email: values.email,
@@ -37,8 +43,9 @@ export function LoginModule() {
     queryClient.invalidateQueries();
     router.push(redirectTo);
     router.refresh();
-  }
+  };
 
+  // return
   return (
     <div className="auth-card">
       <h1 style={{ marginTop: 0 }}>Log in</h1>
@@ -87,4 +94,6 @@ export function LoginModule() {
       </p>
     </div>
   );
-}
+};
+
+export default LoginModule;

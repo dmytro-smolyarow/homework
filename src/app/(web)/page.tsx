@@ -1,14 +1,16 @@
+import { type NextPage } from "next";
+
 import { listItems } from "@/pkg/db";
 import { CatalogModule } from "@/app/modules/catalog";
 
-// Always read fresh data from Supabase on each request.
+// force dynamic — always read fresh from supabase
 export const dynamic = "force-dynamic";
 
-// Thin page: server-side initial fetch via Drizzle, business logic lives in the
-// catalog module.
-export default async function HomePage() {
+// page
+const Page: NextPage = async () => {
   const initialData = await listItems();
 
+  // return
   return (
     <div>
       <h1>Catalog</h1>
@@ -19,4 +21,6 @@ export default async function HomePage() {
       <CatalogModule initialData={JSON.parse(JSON.stringify(initialData))} />
     </div>
   );
-}
+};
+
+export default Page;

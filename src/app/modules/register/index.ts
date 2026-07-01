@@ -1,1 +1,1 @@
-export { RegisterModule } from "./register.module";
+export { default as RegisterModule } from "./register.module";

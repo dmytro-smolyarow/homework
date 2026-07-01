@@ -1,1 +1,1 @@
-export { ItemDetailsModule } from "./item-details.module";
+export { default as ItemDetailsModule } from "./item-details.module";

@@ -1,8 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
+
 import { getSession } from "@/pkg/auth";
 import { addFavorite, listFavorites, removeFavorite } from "@/pkg/db";
 
-// GET /api/favorites -> current user's favorites (with joined item data)
+// GET /api/favorites
 export async function GET() {
   const session = await getSession();
   if (!session) {
@@ -13,7 +14,7 @@ export async function GET() {
   return NextResponse.json(rows);
 }
 
-// POST /api/favorites { itemId } -> add to favorites
+// POST /api/favorites
 export async function POST(request: NextRequest) {
   const session = await getSession();
   if (!session) {
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ ok: true, favorite: created }, { status: 201 });
 }
 
-// DELETE /api/favorites?itemId=... -> remove from favorites
+// DELETE /api/favorites
 export async function DELETE(request: NextRequest) {
   const session = await getSession();
   if (!session) {

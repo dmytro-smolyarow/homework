@@ -1,13 +1,17 @@
 "use client";
 
+import { type FC } from "react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+
 import {
-  useFavoritesQuery,
+  favoritesQueryOptions,
   useRemoveFavoriteMutation,
 } from "@/app/entities/api/favorites";
 
-export function FavoritesModule() {
-  const { data: favorites = [], isLoading } = useFavoritesQuery();
+// component
+const FavoritesModule: FC = () => {
+  const { data: favorites = [], isLoading } = useQuery(favoritesQueryOptions());
   const removeMutation = useRemoveFavoriteMutation();
 
   if (isLoading) {
@@ -22,6 +26,7 @@ export function FavoritesModule() {
     );
   }
 
+  // return
   return (
     <div className="grid">
       {favorites.map((fav) => (
@@ -54,4 +59,6 @@ export function FavoritesModule() {
       ))}
     </div>
   );
-}
+};
+
+export default FavoritesModule;

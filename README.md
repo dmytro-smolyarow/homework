@@ -89,7 +89,8 @@ Copy `.env.example` → `.env.local` and fill in the values:
 | `DATABASE_URL`        | Supabase **transaction pooler** string (port `6543`, `pgbouncer=true`) — runtime |
 | `DIRECT_URL`          | Supabase **session pooler / direct** string (port `5432`) — migrations |
 | `BETTER_AUTH_SECRET`  | Random secret, **≥ 32 chars** (see command below)                     |
-| `BETTER_AUTH_URL`     | App base URL, e.g. `http://localhost:3000`                            |
+| `BETTER_AUTH_URL`     | App base URL (server side), e.g. `http://localhost:3000`              |
+| `NEXT_PUBLIC_BETTER_AUTH_URL` | App base URL exposed to the browser (Better Auth client)      |
 
 Get both connection strings from Supabase → **Connect** → ORMs / Connection string.
 Generate a secret:

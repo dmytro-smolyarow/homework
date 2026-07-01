@@ -3,8 +3,10 @@ config({ path: ".env.local" });
 
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { items } from "./schema";
+import { items } from "../src/pkg/db/schema";
 
+// standalone tooling script: runs under tsx outside Next, so it loads .env.local
+// via dotenv and builds its own db client (does not import the app's envServer).
 const url = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
 if (!url) throw new Error("DIRECT_URL / DATABASE_URL is not set");
 

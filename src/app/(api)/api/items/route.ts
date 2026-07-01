@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
+
 import { DEFAULT_PAGE_SIZE, listItems } from "@/pkg/db";
 
+// GET /api/items
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const search = searchParams.get("search")?.trim() || undefined;

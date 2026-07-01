@@ -10,7 +10,7 @@ export type ListItemsParams = {
   pageSize?: number;
 };
 
-// List items (public). Supports optional search + pagination.
+// list items — optional search + pagination
 export async function listItems({
   search,
   page = 1,
@@ -41,12 +41,13 @@ export async function listItems({
   };
 }
 
+// get item by id
 export async function getItemById(id: string) {
   const rows = await db.select().from(items).where(eq(items.id, id)).limit(1);
   return rows[0] ?? null;
 }
 
-// Bonus: how many times an item was favorited (across all users).
+// favorite count — how many users favorited an item
 export async function getFavoriteCount(itemId: string) {
   const rows = await db
     .select({ value: count() })

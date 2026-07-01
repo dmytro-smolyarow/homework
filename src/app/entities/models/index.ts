@@ -1,2 +1,2 @@
-export type { Item, ItemsResponse, ItemDetail } from "./item.model";
-export type { FavoriteRow } from "./favorite.model";
+export type { IItem, IItemsResponse, IItemDetail } from "./item.model";
+export type { IFavoriteRow } from "./favorite.model";

@@ -2,7 +2,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { db } from "./client";
 import { favorites, items } from "./schema";
 
-// Favorites of a specific user, with the joined item data.
+// list favorites — joined with item data
 export async function listFavorites(userId: string) {
   return db
     .select({
@@ -16,7 +16,7 @@ export async function listFavorites(userId: string) {
     .orderBy(desc(favorites.createdAt));
 }
 
-// Only the item ids the user has favorited (used to render toggle state).
+// favorite item ids — drives toggle state
 export async function listFavoriteItemIds(userId: string) {
   const rows = await db
     .select({ itemId: favorites.itemId })
@@ -25,6 +25,7 @@ export async function listFavoriteItemIds(userId: string) {
   return rows.map((r) => r.itemId);
 }
 
+// add favorite — no-op if already favorited
 export async function addFavorite(userId: string, itemId: string) {
   const rows = await db
     .insert(favorites)
@@ -36,6 +37,7 @@ export async function addFavorite(userId: string, itemId: string) {
   return rows[0] ?? null;
 }
 
+// remove favorite
 export async function removeFavorite(userId: string, itemId: string) {
   await db
     .delete(favorites)

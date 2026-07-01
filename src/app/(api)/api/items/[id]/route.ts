@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+
 import { getFavoriteCount, getItemById } from "@/pkg/db";
 
+// GET /api/items/:id
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> },

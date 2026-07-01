@@ -1,22 +1,27 @@
 "use client";
 
+import { type FC } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+
 import { signOut, useSession } from "@/pkg/auth/auth-client";
 
-export function Navbar() {
+// component
+const Navbar: FC = () => {
   const { data: session, isPending } = useSession();
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  async function handleSignOut() {
+  // sign out — drop cached user data
+  const handleSignOut = async () => {
     await signOut();
     queryClient.clear();
     router.push("/");
     router.refresh();
-  }
+  };
 
+  // return
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -52,4 +57,6 @@ export function Navbar() {
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

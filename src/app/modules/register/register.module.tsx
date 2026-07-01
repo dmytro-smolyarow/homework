@@ -1,20 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { type FC, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
+
 import { signUp } from "@/pkg/auth/auth-client";
 
-type RegisterForm = {
+interface IRegisterForm {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
-};
+}
 
-export function RegisterModule() {
+// component
+const RegisterModule: FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
@@ -26,11 +28,12 @@ export function RegisterModule() {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterForm>();
+  } = useForm<IRegisterForm>();
 
   const password = watch("password");
 
-  async function onSubmit(values: RegisterForm) {
+  // sign up — surface Better Auth errors, then refresh session-aware UI
+  const onSubmit = async (values: IRegisterForm) => {
     setServerError(null);
     const { error } = await signUp.email({
       name: values.name,
@@ -46,8 +49,9 @@ export function RegisterModule() {
     queryClient.invalidateQueries();
     router.push(redirectTo);
     router.refresh();
-  }
+  };
 
+  // return
   return (
     <div className="auth-card">
       <h1 style={{ marginTop: 0 }}>Create account</h1>
@@ -126,4 +130,6 @@ export function RegisterModule() {
       </p>
     </div>
   );
-}
+};
+
+export default RegisterModule;

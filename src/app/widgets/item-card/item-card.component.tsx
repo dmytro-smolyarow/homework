@@ -1,7 +1,18 @@
+import { type FC } from "react";
 import Link from "next/link";
-import type { Item } from "@/app/entities/models";
 
-export function ItemCard({ item }: { item: Item }) {
+import type { IItem } from "@/app/entities/models";
+
+// interface
+interface IProps {
+  item: IItem;
+}
+
+// component
+const ItemCard: FC<Readonly<IProps>> = (props) => {
+  const { item } = props;
+
+  // return
   return (
     <Link href={`/items/${item.id}`} className="card">
       {item.imageUrl ? (
@@ -16,4 +27,6 @@ export function ItemCard({ item }: { item: Item }) {
       </div>
     </Link>
   );
-}
+};
+
+export default ItemCard;

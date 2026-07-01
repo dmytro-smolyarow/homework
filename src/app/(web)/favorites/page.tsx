@@ -1,16 +1,19 @@
+import { type NextPage } from "next";
 import { redirect } from "next/navigation";
+
 import { getSession } from "@/pkg/auth";
 import { FavoritesModule } from "@/app/modules/favorites";
 
-// Protected route. proxy.ts already redirects unauthenticated users, but we
-// also verify the session on the server here (defense in depth).
-export default async function FavoritesPage() {
+// page
+// protected — proxy.ts gates the cookie, this re-verifies the session server-side
+const Page: NextPage = async () => {
   const session = await getSession();
 
   if (!session) {
     redirect("/login?redirect=/favorites");
   }
 
+  // return
   return (
     <div>
       <h1>Your favorites</h1>
@@ -18,4 +21,6 @@ export default async function FavoritesPage() {
       <FavoritesModule />
     </div>
   );
-}
+};
+
+export default Page;

@@ -5,9 +5,8 @@ export {
   removeFavoriteRequest,
 } from "./favorites.api";
 export {
-  favoritesKeys,
-  useFavoritesQuery,
-  useFavoriteIdsQuery,
+  favoritesQueryOptions,
+  favoriteIdsQueryOptions,
 } from "./favorites.query";
 export {
   useToggleFavoriteMutation,

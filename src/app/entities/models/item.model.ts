@@ -1,6 +1,5 @@
-// Domain model for a catalog item (plain, serialization-friendly types — no
-// server/Drizzle imports so the client bundle stays clean).
-export interface Item {
+// item — serialization-safe shape, no drizzle imports (keeps client bundle clean)
+export interface IItem {
   id: string;
   title: string;
   description: string | null;
@@ -8,14 +7,16 @@ export interface Item {
   createdAt: string;
 }
 
-export interface ItemsResponse {
-  items: Item[];
+// items response
+export interface IItemsResponse {
+  items: IItem[];
   total: number;
   page: number;
   pageSize: number;
   totalPages: number;
 }
 
-export interface ItemDetail extends Item {
+// item detail
+export interface IItemDetail extends IItem {
   favoriteCount: number;
 }

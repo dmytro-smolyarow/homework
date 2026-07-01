@@ -1,9 +1,10 @@
-import type { ItemsResponse, ItemDetail } from "@/app/entities/models";
+import type { IItemsResponse, IItemDetail } from "@/app/entities/models";
 
+// items list
 export async function fetchItems(
   search: string,
   page: number,
-): Promise<ItemsResponse> {
+): Promise<IItemsResponse> {
   const params = new URLSearchParams();
   if (search) params.set("search", search);
   params.set("page", String(page));
@@ -12,7 +13,8 @@ export async function fetchItems(
   return res.json();
 }
 
-export async function fetchItem(id: string): Promise<ItemDetail> {
+// item
+export async function fetchItem(id: string): Promise<IItemDetail> {
   const res = await fetch(`/api/items/${id}`);
   if (!res.ok) throw new Error("Failed to load item");
   return res.json();
