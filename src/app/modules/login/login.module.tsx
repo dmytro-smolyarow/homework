@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { signIn } from "@/pkg/auth/auth-client";
+import { OAuthSignIn } from "@/app/features/oauth-sign-in";
 
 interface ILoginForm {
   email: string;
@@ -89,6 +90,7 @@ const LoginModule: FC = () => {
           {isSubmitting ? "Logging in…" : "Log in"}
         </button>
       </form>
+      <OAuthSignIn />
       <p className="muted" style={{ marginTop: 16 }}>
         No account? <Link href="/register">Sign up</Link>
       </p>

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { signUp } from "@/pkg/auth/auth-client";
+import { OAuthSignIn } from "@/app/features/oauth-sign-in";
 
 interface IRegisterForm {
   name: string;
@@ -125,6 +126,7 @@ const RegisterModule: FC = () => {
           {isSubmitting ? "Creating…" : "Sign up"}
         </button>
       </form>
+      <OAuthSignIn />
       <p className="muted" style={{ marginTop: 16 }}>
         Already have an account? <Link href="/login">Log in</Link>
       </p>

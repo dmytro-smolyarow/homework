@@ -1,9 +1,13 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { envServer } from "@/config/env";
+import { envClient, envServer } from "@/config/env";
 import { db, schema } from "@/pkg/db";
 
-// auth — better-auth with drizzle adapter (email + password)
+// github oauth — enabled only when both id (public) and secret are provided
+const githubId = envClient.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+const githubSecret = envServer.GITHUB_CLIENT_SECRET;
+
+// auth — better-auth with drizzle adapter (email + password, optional github oauth)
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
@@ -13,6 +17,10 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 8,
   },
+  socialProviders:
+    githubId && githubSecret
+      ? { github: { clientId: githubId, clientSecret: githubSecret } }
+      : {},
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // refresh daily

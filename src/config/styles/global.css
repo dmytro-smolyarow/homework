@@ -370,6 +370,34 @@ a.title:hover {
   align-items: center;
 }
 
+/* oauth sign-in */
+.oauth {
+  margin-top: 18px;
+}
+.oauth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+.oauth-divider::before,
+.oauth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.oauth-btn {
+  width: 100%;
+  gap: 10px;
+}
+.oauth-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
 .muted {
   color: var(--muted);
 }

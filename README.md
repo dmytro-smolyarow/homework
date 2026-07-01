@@ -91,6 +91,8 @@ Copy `.env.example` → `.env.local` and fill in the values:
 | `BETTER_AUTH_SECRET`  | Random secret, **≥ 32 chars** (see command below)                     |
 | `BETTER_AUTH_URL`     | App base URL (server side), e.g. `http://localhost:3000`              |
 | `NEXT_PUBLIC_BETTER_AUTH_URL` | App base URL exposed to the browser (Better Auth client)      |
+| `NEXT_PUBLIC_GITHUB_CLIENT_ID` | **Optional** — GitHub OAuth client id (public; shows the GitHub button) |
+| `GITHUB_CLIENT_SECRET`| **Optional** — GitHub OAuth app client secret                      |
 
 Get both connection strings from Supabase → **Connect** → ORMs / Connection string.
 Generate a secret:
@@ -98,6 +100,19 @@ Generate a secret:
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
+
+### GitHub OAuth (optional bonus)
+
+Create an OAuth App at **GitHub → Settings → Developer settings → OAuth Apps**:
+
+- **Homepage URL:** `http://localhost:3000`
+- **Authorization callback URL:** `http://localhost:3000/api/auth/callback/github`
+
+Put the client id into `NEXT_PUBLIC_GITHUB_CLIENT_ID` and the secret into
+`GITHUB_CLIENT_SECRET` in `.env.local`, then **restart the dev server** (env is
+read at startup). When both are set, a **Continue with GitHub** button appears on
+`/login` and `/register`; leave them blank and the button is hidden and the app
+runs with email + password only.
 
 > `.env.local` is git-ignored — secrets are never committed. Only `.env.example`
 > (without values) is in the repo.
@@ -157,3 +172,4 @@ Open http://localhost:3000.
 - 📄 Pagination via TanStack Query
 - ⚡ Optimistic favorite toggle with rollback on error
 - 🔢 "Favorited N times" counter on the details page
+- 🔐 GitHub OAuth via Better Auth (optional — see setup above)
