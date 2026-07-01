@@ -444,6 +444,31 @@ a.title:hover {
   border-radius: 999px;
 }
 
+/* animated favorite counter — replays on each value change (keyed remount) */
+.fav-count {
+  display: inline-block;
+  min-width: 0.9ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  animation: count-pop 0.45s var(--ease);
+}
+@keyframes count-pop {
+  0% {
+    transform: translateY(0.5em) scale(0.5);
+    opacity: 0;
+    color: var(--accent-2);
+  }
+  55% {
+    transform: translateY(-0.12em) scale(1.35);
+    opacity: 1;
+    color: #fff;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    color: var(--gold);
+  }
+}
+
 /* keyframes */
 @keyframes fade-up {
   from {

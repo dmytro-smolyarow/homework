@@ -35,7 +35,10 @@ const ItemDetailsModule: FC<Readonly<IProps>> = (props) => {
           <h1 style={{ marginTop: 0 }}>{item.title}</h1>
           <p>
             <span className="badge">
-              ★ Favorited {item.favoriteCount}{" "}
+              ★ Favorited{" "}
+              <span key={item.favoriteCount} className="fav-count">
+                {item.favoriteCount}
+              </span>{" "}
               {item.favoriteCount === 1 ? "time" : "times"}
             </span>
           </p>
