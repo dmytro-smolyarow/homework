@@ -402,6 +402,20 @@ a.title:hover {
   color: var(--muted);
 }
 
+/* 404 */
+.notfound {
+  text-align: center;
+  padding: 72px 0 40px;
+  animation: fade-up 0.5s var(--ease) both;
+}
+.notfound h1 {
+  font-size: clamp(64px, 14vw, 112px);
+  margin-bottom: 4px;
+}
+.notfound .btn {
+  margin-top: 20px;
+}
+
 .pagination {
   display: flex;
   gap: 12px;
