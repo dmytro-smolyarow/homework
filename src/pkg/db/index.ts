@@ -1,5 +1,4 @@
 export { db, schema } from "./client";
-export * as dbSchema from "./schema";
 export {
   DEFAULT_PAGE_SIZE,
   listItems,
@@ -13,4 +12,3 @@ export {
   addFavorite,
   removeFavorite,
 } from "./favorites.service";
-export * from "./schema";
