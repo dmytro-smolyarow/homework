@@ -16,6 +16,7 @@
       "Bash(npm *)",
       "Bash(yarn *)",
       "Bash(pnpm *)",
+      "Bash(npx *)",
       "Bash(node *)",
       "Bash(ls*)",
       "Bash(cat*)",
@@ -25,6 +26,20 @@
       "Bash(echo*)",
       "Bash(grep*)",
       "Bash(find*)",
+      "Bash(rg*)",
+      "Bash(head*)",
+      "Bash(tail*)",
+      "Bash(wc*)",
+      "Bash(sort*)",
+      "Bash(uniq*)",
+      "Bash(diff*)",
+      "Bash(which*)",
+      "Bash(tree*)",
+      "Bash(jq*)",
+      "Bash(env)",
+      "Bash(printenv*)",
+      "Bash(date*)",
+      "Bash(stat*)",
       "Bash(curl*)",
       "Read",
       "Edit",
@@ -33,7 +48,15 @@
     "ask": [
       "Bash(rm*)",
       "Bash(sudo*)",
-      "Bash(git push*)"
+      "Bash(git push*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~*)",
+      "Read(.env.local)",
+      "Read(.env)"
     ]
   }
 }
