@@ -8,7 +8,7 @@ import {
   favoritesQueryOptions,
   useRemoveFavoriteMutation,
 } from "@/app/entities/api/favorites";
-import { CoverImage } from "@/app/shared/ui";
+import { FavoriteCard } from "./elements/favorite-card";
 
 // component
 const FavoritesModule: FC = () => {
@@ -38,23 +38,12 @@ const FavoritesModule: FC = () => {
   return (
     <div className="grid">
       {favorites.map((fav) => (
-        <div key={fav.favoriteId} className="card">
-          <Link href={`/items/${fav.item.id}`}>
-            <CoverImage src={fav.item.imageUrl} alt={fav.item.title} />
-          </Link>
-          <div className="body">
-            <Link href={`/items/${fav.item.id}`} className="title">
-              {fav.item.title}
-            </Link>
-            <button
-              className="btn"
-              disabled={removeMutation.isPending}
-              onClick={() => removeMutation.mutate(fav.item.id)}
-            >
-              ✕ Remove
-            </button>
-          </div>
-        </div>
+        <FavoriteCard
+          key={fav.favoriteId}
+          favorite={fav}
+          onRemove={removeMutation.mutate}
+          removing={removeMutation.isPending}
+        />
       ))}
     </div>
   );

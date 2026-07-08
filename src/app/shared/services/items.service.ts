@@ -1,8 +1,12 @@
 import { count, desc, eq, ilike } from "drizzle-orm";
-import { db } from "./client";
-import { favorites, items } from "./schema";
+
+import { db, favorites, items } from "@/pkg/db";
 
 export const DEFAULT_PAGE_SIZE = 8;
+
+// a malformed id is definitionally "not found" — don't send it to a uuid column
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export type ListItemsParams = {
   search?: string;
@@ -43,6 +47,8 @@ export async function listItems({
 
 // get item by id
 export async function getItemById(id: string) {
+  // guard: invalid uuid -> not found (avoids a Postgres 500 on bad URLs)
+  if (!UUID_RE.test(id)) return null;
   const rows = await db.select().from(items).where(eq(items.id, id)).limit(1);
   return rows[0] ?? null;
 }

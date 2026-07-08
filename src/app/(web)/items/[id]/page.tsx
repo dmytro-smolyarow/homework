@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { notFound } from "next/navigation";
 
-import { getFavoriteCount, getItemById } from "@/pkg/db";
+import { getFavoriteCount, getItemById } from "@/app/shared/services";
 import { ItemDetailsModule } from "@/app/modules/item-details";
 
 // isr — favoriteCount is a cross-user aggregate, 60s staleness is acceptable

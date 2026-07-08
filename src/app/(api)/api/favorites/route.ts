@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { getSession } from "@/pkg/auth";
-import { addFavorite, listFavorites, removeFavorite } from "@/pkg/db";
+import { addFavorite, listFavorites, removeFavorite } from "@/app/shared/services";
 
 // GET /api/favorites
 export async function GET() {

@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { itemQueryOptions } from "@/app/entities/api/items";
 import type { IItemDetail } from "@/app/entities/models";
 import { FavoriteButton } from "@/app/features/favorite-button";
-import { CoverImage } from "@/app/shared/ui";
+import { CoverImage } from "@/app/shared/components";
 
 // interface
 interface IProps {
@@ -35,7 +35,10 @@ const ItemDetailsModule: FC<Readonly<IProps>> = (props) => {
           <h1 style={{ marginTop: 0 }}>{item.title}</h1>
           <p>
             <span className="badge">
-              ★ Favorited {item.favoriteCount}{" "}
+              ★ Favorited{" "}
+              <span key={item.favoriteCount} className="fav-count">
+                {item.favoriteCount}
+              </span>{" "}
               {item.favoriteCount === 1 ? "time" : "times"}
             </span>
           </p>

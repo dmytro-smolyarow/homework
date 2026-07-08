@@ -2,7 +2,7 @@ import { type FC } from "react";
 import Link from "next/link";
 
 import type { IItem } from "@/app/entities/models";
-import { CoverImage } from "@/app/shared/ui";
+import { CoverImage } from "@/app/shared/components";
 
 // interface
 interface IProps {

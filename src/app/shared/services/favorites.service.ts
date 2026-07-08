@@ -1,6 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
-import { db } from "./client";
-import { favorites, items } from "./schema";
+
+import { db, favorites, items } from "@/pkg/db";
 
 // list favorites — joined with item data
 export async function listFavorites(userId: string) {
