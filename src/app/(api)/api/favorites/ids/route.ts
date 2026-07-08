@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/pkg/auth";
-import { listFavoriteItemIds } from "@/pkg/db";
+import { listFavoriteItemIds } from "@/app/shared/services";
 
 // GET /api/favorites/ids
 // item ids the current user favorited — drives toggle state on list/detail

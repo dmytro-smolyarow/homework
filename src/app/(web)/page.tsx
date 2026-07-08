@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 
-import { listItems } from "@/pkg/db";
+import { listItems } from "@/app/shared/services";
 import { CatalogModule } from "@/app/modules/catalog";
 
 // isr — cache the rendered list, revalidate every 5 min

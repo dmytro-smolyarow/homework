@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { DEFAULT_PAGE_SIZE, listItems } from "@/pkg/db";
+import { DEFAULT_PAGE_SIZE, listItems } from "@/app/shared/services";
 
 // GET /api/items
 export async function GET(request: NextRequest) {

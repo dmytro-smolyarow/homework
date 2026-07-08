@@ -1,6 +1,8 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { envClient, envServer } from "@/config/env";
+// intentional pkg->pkg: the drizzle client is the single shared DB connection.
+// better-auth needs that exact instance; duplicating the pool here would be worse.
 import { db, schema } from "@/pkg/db";
 
 // github oauth — enabled only when both id (public) and secret are provided

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getFavoriteCount, getItemById } from "@/pkg/db";
+import { getFavoriteCount, getItemById } from "@/app/shared/services";
 
 // GET /api/items/:id
 export async function GET(

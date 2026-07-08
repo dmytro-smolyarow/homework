@@ -1,6 +1,6 @@
 import { count, desc, eq, ilike } from "drizzle-orm";
-import { db } from "./client";
-import { favorites, items } from "./schema";
+
+import { db, favorites, items } from "@/pkg/db";
 
 export const DEFAULT_PAGE_SIZE = 8;
 
