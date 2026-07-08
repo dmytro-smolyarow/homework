@@ -1,16 +1,19 @@
 "use client";
 
 import { type FC, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 import { envClient } from "@/config/env";
 import { signIn } from "@/pkg/auth/auth-client";
 
+// interface
+interface IProps {
+  redirectTo: string;
+}
+
 // component
 // social sign-in (github), reused by the login and register modules
-const OAuthSignIn: FC = () => {
-  const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") ?? "/";
+const OAuthSignIn: FC<Readonly<IProps>> = (props) => {
+  const { redirectTo } = props;
 
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);

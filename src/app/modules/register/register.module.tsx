@@ -2,7 +2,7 @@
 
 import { type FC, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -16,12 +16,17 @@ interface IRegisterForm {
   confirmPassword: string;
 }
 
+// interface
+interface IProps {
+  redirectTo: string;
+}
+
 // component
-const RegisterModule: FC = () => {
+const RegisterModule: FC<Readonly<IProps>> = (props) => {
+  const { redirectTo } = props;
+
   const router = useRouter();
-  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const redirectTo = searchParams.get("redirect") ?? "/";
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
@@ -126,7 +131,7 @@ const RegisterModule: FC = () => {
           {isSubmitting ? "Creating…" : "Sign up"}
         </button>
       </form>
-      <OAuthSignIn />
+      <OAuthSignIn redirectTo={redirectTo} />
       <p className="muted" style={{ marginTop: 16 }}>
         Already have an account? <Link href="/login">Log in</Link>
       </p>
