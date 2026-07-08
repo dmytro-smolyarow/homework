@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import "@/config/styles/global.css";
 import { fontSans } from "@/config/fonts";
-import { QueryProvider } from "@/app/shared/ui";
+import { QueryProvider } from "@/app/shared/components";
 import { Navbar } from "@/app/widgets/navbar";
 
 // metadata

@@ -38,7 +38,7 @@ const <Name>: FC<Readonly<IProps>> = (props) => {
 export default <Name>;
 ```
 
-- Props are typed `Readonly<IProps>` inside `FC<…>`; destructuring happens on the **first body line** (`const { children } = props;`), never in the parameter list. Anchors: `src/app/shared/ui/cover-image/cover-image.component.tsx`, `src/app/features/favorite-button/favorite-button.component.tsx`.
+- Props are typed `Readonly<IProps>` inside `FC<…>`; destructuring happens on the **first body line** (`const { children } = props;`), never in the parameter list. Anchors: `src/app/shared/components/cover-image/cover-image.component.tsx`, `src/app/features/favorite-button/favorite-button.component.tsx`.
 - The file has a `export default <Name>` at the bottom; the slice `index.ts` re-exports it as a **named** export: `export { default as <Name> } from './<name>.component'`.
 
 ### Component identifier suffix — drift note

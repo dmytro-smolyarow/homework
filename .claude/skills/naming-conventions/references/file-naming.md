@@ -48,5 +48,4 @@ The `*-structure` skills also define `*.store.ts`, `*.hook.ts(x)`, `*.util.ts`, 
 ## Drift notes
 
 - **`pkg/*` uses plain `*.ts`, not `*.pkg.ts`.** The files under `src/pkg/` are bare kebab names: `auth-client.ts`, `auth.ts`, `session.ts` (`src/pkg/auth/`) and `client.ts`, `schema.ts`, `auth-schema.ts` (`src/pkg/db/`). The `client-structure` skill documents a `*.pkg.ts` public-surface suffix; this repo does not use it. Anchor on the code — keep `pkg/*` files as plain kebab `*.ts` to match what's there, unless a task says otherwise.
-- **Shared UI folder is `shared/ui/`, not `shared/components/`.** File suffix is still `*.component.tsx` (`src/app/shared/ui/cover-image/cover-image.component.tsx`). Folder location is a placement concern (see the structure skill); the file-naming suffix is unaffected.
 - **Root middleware file is `src/proxy.ts`, not `src/middleware.ts`.** It exports `proxy` and `config`. This is a naming/placement drift from the structure skill's `middleware.ts`; note it but don't rename existing files as part of an unrelated task.

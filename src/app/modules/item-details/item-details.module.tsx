@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { itemQueryOptions } from "@/app/entities/api/items";
 import type { IItemDetail } from "@/app/entities/models";
 import { FavoriteButton } from "@/app/features/favorite-button";
-import { CoverImage } from "@/app/shared/ui";
+import { CoverImage } from "@/app/shared/components";
 
 // interface
 interface IProps {

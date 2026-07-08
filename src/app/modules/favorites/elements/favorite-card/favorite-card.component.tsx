@@ -4,7 +4,7 @@ import { type FC } from "react";
 import Link from "next/link";
 
 import type { IFavoriteRow } from "@/app/entities/models";
-import { CoverImage } from "@/app/shared/ui";
+import { CoverImage } from "@/app/shared/components";
 
 // interface
 interface IProps {

@@ -18,7 +18,7 @@ Declarative naming rules that hold for **every** name in the codebase. After any
 - **MUST** use the signature `const <Name>: FC<Readonly<IProps>> = (props) => {}` (pages: `NextPage`, `async`), destructuring on the first body line `const { … } = props;`.
   Check: `grep -rn "FC<Readonly<IProps>>\|NextPage<Readonly<IProps>>" src`; no destructuring in the parameter list.
 - **MUST** suffix a **module** component identifier with `Module` (`<Name>Module`); **MUST NOT** add a `Component` suffix to other component identifiers.
-  Check: `modules/*` identifiers end in `Module`; `widgets|features|shared/ui|elements` identifiers are bare PascalCase (`ItemCard`, not `ItemCardComponent`).
+  Check: `modules/*` identifiers end in `Module`; `widgets|features|shared/components|elements` identifiers are bare PascalCase (`ItemCard`, not `ItemCardComponent`).
 - **MUST** re-export a component from its slice `index.ts` as a named export: `export { default as <Name> } from './<name>.…'`.
   Check: each slice `index.ts` uses `export { default as … }`.
 
