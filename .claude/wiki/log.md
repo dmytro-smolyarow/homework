@@ -60,3 +60,27 @@ Re-ran the full Ingest over the repo to reconcile the wiki against current sourc
   so the `/dashboard` + `/sign-in` middleware guards misbehave.
 - **Result:** no drift found; no page content or `index.md` changes required.
   Pages remain grounded in current source.
+
+## [2026-07-12] ingest | whole repository (re-authored for actual project)
+
+The wiki had been copied verbatim from the `rl-apps-template` monorepo and did not
+describe this repository at all. Re-authored the entire wiki against the real
+source (`homework-catalog` / **BookShelf**, a single Next.js 16 book-catalog app).
+
+- **Removed 15 template pages** with no equivalent here: all `client-*`, `server-*`,
+  `worker-*` pages, `payload-cms`, and `build-and-deploy`.
+- **Rewrote** `index.md`, `architecture.md`, `data-flow.md`, `auth.md`,
+  `database-and-migrations.md`, `conventions-and-skills.md` for the single-app
+  reality (no monorepo, no Fastify/Payload, no Cloudflare Worker).
+- **Added 3 layer pages** fitting `src/`: [[routing]] (`(web)` pages + `(api)`
+  BFF), [[data-layer]] (`entities/api` + models + `EEntityKey` + `pkg/fetcher` +
+  `pkg/tanstack`), [[ui-layer]] (modules/widgets/features/shared/config).
+- Facts grounded via parallel source reads: the two request paths (RSC-direct SSR
+  seed vs client→BFF), Drizzle schema (`items`, `favorites` + 4 better-auth tables,
+  `prepare:false` for pgbouncer), better-auth (email/pass + conditional GitHub
+  OAuth, `proxy.ts` edge guard on `/favorites`), optimistic favorite mutations,
+  and the ESLint/Prettier tooling + client/server import discipline (env has no
+  barrel; auth barrel is server-safe) added earlier this session.
+- Page set is now **9**: `index` + Concepts (architecture, data-flow, auth,
+  database-and-migrations, conventions-and-skills) + Layers (routing, data-layer,
+  ui-layer). All cross-linked with `[[wikilinks]]`.

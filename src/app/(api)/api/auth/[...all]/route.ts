@@ -1,6 +1,6 @@
-import { toNextJsHandler } from "better-auth/next-js";
+import { toNextJsHandler } from 'better-auth/next-js'
 
-import { auth } from "@/pkg/auth";
+import { auth } from '@/pkg/auth'
 
 // GET,POST /api/auth/*
-export const { GET, POST } = toNextJsHandler(auth);
+export const { GET, POST } = toNextJsHandler(auth)

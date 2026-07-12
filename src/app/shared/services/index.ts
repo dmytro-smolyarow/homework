@@ -1,13 +1,2 @@
-export {
-  DEFAULT_PAGE_SIZE,
-  listItems,
-  getItemById,
-  getFavoriteCount,
-  type ListItemsParams,
-} from "./items.service";
-export {
-  listFavorites,
-  listFavoriteItemIds,
-  addFavorite,
-  removeFavorite,
-} from "./favorites.service";
+export { addFavorite, listFavoriteItemIds, listFavorites, removeFavorite } from './favorites.service'
+export { DEFAULT_PAGE_SIZE, getFavoriteCount, getItemById, listItems, type ListItemsParams } from './items.service'

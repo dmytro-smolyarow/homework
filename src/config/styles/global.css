@@ -36,10 +36,20 @@ html,
 body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    var(--font-sans),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -47,21 +57,13 @@ body {
 
 /* ambient background glow */
 body::before {
-  content: "";
+  content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(
-      60rem 60rem at 15% -10%,
-      rgba(139, 123, 255, 0.16),
-      transparent 60%
-    ),
-    radial-gradient(
-      50rem 50rem at 100% 0%,
-      rgba(34, 211, 238, 0.12),
-      transparent 55%
-    ),
+    radial-gradient(60rem 60rem at 15% -10%, rgba(139, 123, 255, 0.16), transparent 60%),
+    radial-gradient(50rem 50rem at 100% 0%, rgba(34, 211, 238, 0.12), transparent 55%),
     linear-gradient(180deg, var(--bg-2), var(--bg));
 }
 
@@ -99,9 +101,9 @@ h1 {
   top: 0;
   z-index: 50;
   border-bottom: 1px solid var(--border);
-  background: rgba(10, 12, 18, 0.6);
-  backdrop-filter: saturate(140%) blur(14px);
-  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  background: rgba(10, 12, 18, 0.85);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
 }
 
 .navbar-inner {
@@ -133,7 +135,7 @@ h1 {
   transition: color 0.2s var(--ease);
 }
 .navbar a.nav-link::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: -6px;
@@ -174,14 +176,30 @@ h1 {
   animation: fade-up 0.5s var(--ease) both;
 }
 /* staggered entrance for the first rows */
-.grid .card:nth-child(1) { animation-delay: 0.02s; }
-.grid .card:nth-child(2) { animation-delay: 0.06s; }
-.grid .card:nth-child(3) { animation-delay: 0.1s; }
-.grid .card:nth-child(4) { animation-delay: 0.14s; }
-.grid .card:nth-child(5) { animation-delay: 0.18s; }
-.grid .card:nth-child(6) { animation-delay: 0.22s; }
-.grid .card:nth-child(7) { animation-delay: 0.26s; }
-.grid .card:nth-child(8) { animation-delay: 0.3s; }
+.grid .card:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.grid .card:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.grid .card:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.grid .card:nth-child(4) {
+  animation-delay: 0.14s;
+}
+.grid .card:nth-child(5) {
+  animation-delay: 0.18s;
+}
+.grid .card:nth-child(6) {
+  animation-delay: 0.22s;
+}
+.grid .card:nth-child(7) {
+  animation-delay: 0.26s;
+}
+.grid .card:nth-child(8) {
+  animation-delay: 0.3s;
+}
 .card:hover {
   transform: translateY(-6px);
   border-color: var(--border-strong);
@@ -203,12 +221,7 @@ h1 {
 
 /* cover load states (used by CoverImage) */
 .cover.is-loading {
-  background: linear-gradient(
-    100deg,
-    var(--panel) 30%,
-    var(--panel-2) 50%,
-    var(--panel) 70%
-  );
+  background: linear-gradient(100deg, var(--panel) 30%, var(--panel-2) 50%, var(--panel) 70%);
   background-size: 200% 100%;
   animation: shimmer 1.3s linear infinite;
   filter: blur(12px);
@@ -384,7 +397,7 @@ a.title:hover {
 }
 .oauth-divider::before,
 .oauth-divider::after {
-  content: "";
+  content: '';
   flex: 1;
   height: 1px;
   background: var(--border);
@@ -428,12 +441,7 @@ a.title:hover {
 .skeleton {
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: linear-gradient(
-    100deg,
-    var(--panel) 30%,
-    var(--panel-2) 50%,
-    var(--panel) 70%
-  );
+  background: linear-gradient(100deg, var(--panel) 30%, var(--panel-2) 50%, var(--panel) 70%);
   background-size: 200% 100%;
   animation: shimmer 1.3s linear infinite;
 }
@@ -443,8 +451,12 @@ a.title:hover {
 }
 
 @keyframes shimmer {
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 
 /* detail */
@@ -523,13 +535,24 @@ a.title:hover {
   }
 }
 @keyframes pop {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.14); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 @keyframes grad-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* respect reduced motion */

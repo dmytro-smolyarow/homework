@@ -1,21 +1,15 @@
-import type { IItemsResponse, IItemDetail } from "@/app/entities/models";
+import type { IItemDetail, IItemsResponse } from '@/app/entities/models'
+import { fetcher } from '@/pkg/fetcher'
 
 // items list
-export async function fetchItems(
-  search: string,
-  page: number,
-): Promise<IItemsResponse> {
-  const params = new URLSearchParams();
-  if (search) params.set("search", search);
-  params.set("page", String(page));
-  const res = await fetch(`/api/items?${params.toString()}`);
-  if (!res.ok) throw new Error("Failed to load items");
-  return res.json();
+export async function fetchItems(search: string, page: number): Promise<IItemsResponse> {
+  const params = new URLSearchParams()
+  if (search) params.set('search', search)
+  params.set('page', String(page))
+  return fetcher<IItemsResponse>(`/api/items?${params.toString()}`)
 }
 
 // item
 export async function fetchItem(id: string): Promise<IItemDetail> {
-  const res = await fetch(`/api/items/${id}`);
-  if (!res.ok) throw new Error("Failed to load item");
-  return res.json();
+  return fetcher<IItemDetail>(`/api/items/${id}`)
 }

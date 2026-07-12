@@ -7,15 +7,15 @@ and save books to your personal **favorites** (auth-only, stored per user).
 
 ## Stack
 
-| Layer            | Technology                                   |
-| ---------------- | -------------------------------------------- |
-| Framework        | Next.js 16 (App Router, Server Components)   |
-| Client data/cache| TanStack Query (`@tanstack/react-query`)     |
-| Forms            | react-hook-form                              |
-| Auth             | Better Auth (email + password)               |
-| Database         | Supabase (Postgres)                          |
-| ORM              | Drizzle ORM + Drizzle Kit                    |
-| Language         | TypeScript                                   |
+| Layer             | Technology                                 |
+| ----------------- | ------------------------------------------ |
+| Framework         | Next.js 16 (App Router, Server Components) |
+| Client data/cache | TanStack Query (`@tanstack/react-query`)   |
+| Forms             | react-hook-form                            |
+| Auth              | Better Auth (email + password)             |
+| Database          | Supabase (Postgres)                        |
+| ORM               | Drizzle ORM + Drizzle Kit                  |
+| Language          | TypeScript                                 |
 
 All queries to `items` and `favorites` go **through Drizzle only** — no raw SQL
 and no `supabase-js` client for these tables. Supabase is used purely as the
@@ -23,18 +23,18 @@ Postgres host.
 
 ## Routes
 
-| Route                 | Purpose                          | Access        |
-| --------------------- | -------------------------------- | ------------- |
-| `/`                   | Book list                        | public        |
-| `/items/[id]`         | Book details                     | public        |
-| `/favorites`          | Current user's favorites         | authenticated |
-| `/login`              | Login form                       | public        |
-| `/register`           | Registration form                | public        |
-| `/api/auth/[...all]`  | Better Auth route handler        | —             |
-| `/api/items`          | List items (search + pagination) | public        |
-| `/api/items/[id]`     | Single item (+ favorite count)   | public        |
-| `/api/favorites`      | GET / POST / DELETE favorites    | authenticated |
-| `/api/favorites/ids`  | Favorited item ids (toggle state)| authenticated |
+| Route                | Purpose                           | Access        |
+| -------------------- | --------------------------------- | ------------- |
+| `/`                  | Book list                         | public        |
+| `/items/[id]`        | Book details                      | public        |
+| `/favorites`         | Current user's favorites          | authenticated |
+| `/login`             | Login form                        | public        |
+| `/register`          | Registration form                 | public        |
+| `/api/auth/[...all]` | Better Auth route handler         | —             |
+| `/api/items`         | List items (search + pagination)  | public        |
+| `/api/items/[id]`    | Single item (+ favorite count)    | public        |
+| `/api/favorites`     | GET / POST / DELETE favorites     | authenticated |
+| `/api/favorites/ids` | Favorited item ids (toggle state) | authenticated |
 
 `/favorites` is protected two ways: a lightweight cookie check in
 [`src/proxy.ts`](src/proxy.ts) (Next.js 16 renamed `middleware.ts` → `proxy.ts`)
@@ -84,15 +84,15 @@ Schema lives in [`src/pkg/db/schema.ts`](src/pkg/db/schema.ts) and
 
 Copy `.env.example` → `.env.local` and fill in the values:
 
-| Variable              | What it is                                                             |
-| --------------------- | --------------------------------------------------------------------- |
-| `DATABASE_URL`        | Supabase **transaction pooler** string (port `6543`, `pgbouncer=true`) — runtime |
-| `DIRECT_URL`          | Supabase **session pooler / direct** string (port `5432`) — migrations |
-| `BETTER_AUTH_SECRET`  | Random secret, **≥ 32 chars** (see command below)                     |
-| `BETTER_AUTH_URL`     | App base URL (server side), e.g. `http://localhost:3000`              |
-| `NEXT_PUBLIC_BETTER_AUTH_URL` | App base URL exposed to the browser (Better Auth client)      |
-| `NEXT_PUBLIC_GITHUB_CLIENT_ID` | **Optional** — GitHub OAuth client id (public; shows the GitHub button) |
-| `GITHUB_CLIENT_SECRET`| **Optional** — GitHub OAuth app client secret                      |
+| Variable                       | What it is                                                                       |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| `DATABASE_URL`                 | Supabase **transaction pooler** string (port `6543`, `pgbouncer=true`) — runtime |
+| `DIRECT_URL`                   | Supabase **session pooler / direct** string (port `5432`) — migrations           |
+| `BETTER_AUTH_SECRET`           | Random secret, **≥ 32 chars** (see command below)                                |
+| `BETTER_AUTH_URL`              | App base URL (server side), e.g. `http://localhost:3000`                         |
+| `NEXT_PUBLIC_BETTER_AUTH_URL`  | App base URL exposed to the browser (Better Auth client)                         |
+| `NEXT_PUBLIC_GITHUB_CLIENT_ID` | **Optional** — GitHub OAuth client id (public; shows the GitHub button)          |
+| `GITHUB_CLIENT_SECRET`         | **Optional** — GitHub OAuth app client secret                                    |
 
 Get both connection strings from Supabase → **Connect** → ORMs / Connection string.
 Generate a secret:
@@ -142,16 +142,16 @@ Open http://localhost:3000.
 
 ## Scripts
 
-| Script              | Description                                  |
-| ------------------- | -------------------------------------------- |
-| `npm run dev`       | Start Next.js dev server                     |
-| `npm run build`     | Production build                             |
-| `npm run start`     | Start production server                      |
-| `npm run db:generate` | Generate Drizzle migration SQL             |
-| `npm run db:migrate`  | Apply migrations                           |
-| `npm run db:push`     | Push schema directly (interactive)         |
-| `npm run db:studio`   | Open Drizzle Studio                        |
-| `npm run db:seed`     | Seed the `items` table                     |
+| Script                | Description                        |
+| --------------------- | ---------------------------------- |
+| `npm run dev`         | Start Next.js dev server           |
+| `npm run build`       | Production build                   |
+| `npm run start`       | Start production server            |
+| `npm run db:generate` | Generate Drizzle migration SQL     |
+| `npm run db:migrate`  | Apply migrations                   |
+| `npm run db:push`     | Push schema directly (interactive) |
+| `npm run db:studio`   | Open Drizzle Studio                |
+| `npm run db:seed`     | Seed the `items` table             |
 
 ## How the requirements are met
 
