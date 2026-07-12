@@ -1,16 +1,17 @@
-"use client";
+'use client'
 
-import { type FC, type ReactNode, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { type FC, type ReactNode, useState } from 'react'
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // interface
 interface IProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 // component
 const QueryProvider: FC<Readonly<IProps>> = (props) => {
-  const { children } = props;
+  const { children } = props
 
   const [queryClient] = useState(
     () =>
@@ -22,12 +23,10 @@ const QueryProvider: FC<Readonly<IProps>> = (props) => {
           },
         },
       }),
-  );
+  )
 
   // return
-  return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  );
-};
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+}
 
-export default QueryProvider;
+export default QueryProvider
