@@ -1,2 +1,2 @@
-export { fetchItems, fetchItem } from "./items.api";
-export { itemsQueryOptions, itemQueryOptions } from "./items.query";
+export { fetchItem, fetchItems } from './items.api'
+export { itemQueryOptions, itemsQueryOptions } from './items.query'

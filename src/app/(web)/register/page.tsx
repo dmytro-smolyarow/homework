@@ -1,19 +1,19 @@
-import { type NextPage } from "next";
+import { type NextPage } from 'next'
 
-import { RegisterModule } from "@/app/modules/register";
+import { RegisterModule } from '@/app/modules/register'
 
 // interface
 interface IProps {
-  searchParams: Promise<{ redirect?: string | string[] }>;
+  searchParams: Promise<{ redirect?: string | string[] }>
 }
 
 // page
 const Page: NextPage<Readonly<IProps>> = async (props) => {
-  const { redirect } = await props.searchParams;
-  const redirectTo = typeof redirect === "string" ? redirect : "/";
+  const { redirect } = await props.searchParams
+  const redirectTo = typeof redirect === 'string' ? redirect : '/'
 
   // return
-  return <RegisterModule redirectTo={redirectTo} />;
-};
+  return <RegisterModule redirectTo={redirectTo} />
+}
 
-export default Page;
+export default Page

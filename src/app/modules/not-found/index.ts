@@ -1,1 +1,1 @@
-export { default as NotFoundModule } from "./not-found.module";
+export { default as NotFoundModule } from './not-found.module'

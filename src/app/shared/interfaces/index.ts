@@ -1,1 +1,1 @@
-export { EEntityKey } from "./entities.interface";
+export { EEntityKey } from './entities.interface'

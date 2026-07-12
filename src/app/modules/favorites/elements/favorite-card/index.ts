@@ -1,1 +1,1 @@
-export { default as FavoriteCard } from "./favorite-card.component";
+export { default as FavoriteCard } from './favorite-card.component'

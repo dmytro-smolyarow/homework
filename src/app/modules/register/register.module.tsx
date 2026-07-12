@@ -1,142 +1,138 @@
-"use client";
+'use client'
 
-import { type FC, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { useQueryClient } from "@tanstack/react-query";
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { type FC, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { signUp } from "@/pkg/auth/auth-client";
-import { OAuthSignIn } from "@/app/features/oauth-sign-in";
+import { useQueryClient } from '@tanstack/react-query'
+
+import { OAuthSignIn } from '@/app/features/oauth-sign-in'
+import { signUp } from '@/pkg/auth/auth-client'
 
 interface IRegisterForm {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
 }
 
 // interface
 interface IProps {
-  redirectTo: string;
+  redirectTo: string
 }
 
 // component
 const RegisterModule: FC<Readonly<IProps>> = (props) => {
-  const { redirectTo } = props;
+  const { redirectTo } = props
 
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const [serverError, setServerError] = useState<string | null>(null);
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  const [serverError, setServerError] = useState<string | null>(null)
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<IRegisterForm>();
+  } = useForm<IRegisterForm>()
 
-  const password = watch("password");
+  const password = watch('password')
 
   // sign up — surface Better Auth errors, then refresh session-aware UI
   const onSubmit = async (values: IRegisterForm) => {
-    setServerError(null);
+    setServerError(null)
     const { error } = await signUp.email({
       name: values.name,
       email: values.email,
       password: values.password,
-    });
+    })
 
     if (error) {
-      setServerError(error.message ?? "Could not create account");
-      return;
+      setServerError(error.message ?? 'Could not create account')
+      return
     }
 
-    queryClient.invalidateQueries();
-    router.push(redirectTo);
-    router.refresh();
-  };
+    queryClient.invalidateQueries()
+    router.push(redirectTo)
+    router.refresh()
+  }
 
   // return
   return (
-    <div className="auth-card">
+    <div className='auth-card'>
       <h1 style={{ marginTop: 0 }}>Create account</h1>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div className="field">
-          <label htmlFor="name">Name</label>
+        <div className='field'>
+          <label htmlFor='name'>Name</label>
           <input
-            id="name"
-            className="input"
-            {...register("name", {
-              required: "Name is required",
-              minLength: { value: 2, message: "At least 2 characters" },
+            id='name'
+            className='input'
+            {...register('name', {
+              required: 'Name is required',
+              minLength: { value: 2, message: 'At least 2 characters' },
             })}
           />
-          {errors.name && <span className="error">{errors.name.message}</span>}
+          {errors.name && <span className='error'>{errors.name.message}</span>}
         </div>
 
-        <div className="field">
-          <label htmlFor="email">Email</label>
+        <div className='field'>
+          <label htmlFor='email'>Email</label>
           <input
-            id="email"
-            className="input"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
+            id='email'
+            className='input'
+            type='email'
+            {...register('email', {
+              required: 'Email is required',
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Enter a valid email",
+                message: 'Enter a valid email',
               },
             })}
           />
-          {errors.email && <span className="error">{errors.email.message}</span>}
+          {errors.email && <span className='error'>{errors.email.message}</span>}
         </div>
 
-        <div className="field">
-          <label htmlFor="password">Password</label>
+        <div className='field'>
+          <label htmlFor='password'>Password</label>
           <input
-            id="password"
-            className="input"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: { value: 8, message: "At least 8 characters" },
+            id='password'
+            className='input'
+            type='password'
+            {...register('password', {
+              required: 'Password is required',
+              minLength: { value: 8, message: 'At least 8 characters' },
             })}
           />
-          {errors.password && (
-            <span className="error">{errors.password.message}</span>
-          )}
+          {errors.password && <span className='error'>{errors.password.message}</span>}
         </div>
 
-        <div className="field">
-          <label htmlFor="confirmPassword">Confirm password</label>
+        <div className='field'>
+          <label htmlFor='confirmPassword'>Confirm password</label>
           <input
-            id="confirmPassword"
-            className="input"
-            type="password"
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
+            id='confirmPassword'
+            className='input'
+            type='password'
+            {...register('confirmPassword', {
+              required: 'Please confirm your password',
+              validate: (value) => value === password || 'Passwords do not match',
             })}
           />
-          {errors.confirmPassword && (
-            <span className="error">{errors.confirmPassword.message}</span>
-          )}
+          {errors.confirmPassword && <span className='error'>{errors.confirmPassword.message}</span>}
         </div>
 
-        {serverError && <p className="error">{serverError}</p>}
+        {serverError && <p className='error'>{serverError}</p>}
 
-        <button className="btn primary" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Creating…" : "Sign up"}
+        <button className='btn primary' type='submit' disabled={isSubmitting}>
+          {isSubmitting ? 'Creating…' : 'Sign up'}
         </button>
       </form>
       <OAuthSignIn redirectTo={redirectTo} />
-      <p className="muted" style={{ marginTop: 16 }}>
-        Already have an account? <Link href="/login">Log in</Link>
+      <p className='muted' style={{ marginTop: 16 }}>
+        Already have an account? <Link href='/login'>Log in</Link>
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterModule;
+export default RegisterModule
